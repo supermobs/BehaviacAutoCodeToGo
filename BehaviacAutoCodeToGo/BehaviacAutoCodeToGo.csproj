@@ -7,8 +7,8 @@
     <ProjectGuid>{8EDF1487-6821-4F03-922E-62A3234FD034}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>behaviac_autoCodeToGo</RootNamespace>
-    <AssemblyName>behaviac_autoCodeToGo</AssemblyName>
+    <RootNamespace>BehaviacAutoCodeToGo</RootNamespace>
+    <AssemblyName>BehaviacAutoCodeToGo</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
