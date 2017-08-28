@@ -10,10 +10,10 @@ namespace behaviac_autoCodeToGo
 {
     class Program
     {
-        static string MetaPath = "../../../../behaviac_fightLogic/behaviors/behaviac_meta/pkm.meta.xml";
-        static string CppExportPath = "../../../../behaviac_dll/gointerface/behaviac_generated/types/internal/";
-        static string GoBridgePath = "../../../../server/src/server/behaviac/";
-        static string GoImportPath = "server/behaviac";
+        static string MetaPath = "G:/wproject_pokemon/trunk/Desginer/Plan/09行为树/behaviors/behaviac_meta/pkm.meta.xml";
+        static string CppExportPath = "G:/wproject_pokemon/trunk/Server/behaviac_dll/gointerface/behaviac_generated/types/internal/";
+        static string GoBridgePath = "G:/wproject_pokemon/trunk/Server/src/behaviac/";
+        static string GoImportPath = "behaviac";
 
         static void Main(string[] args)
         {
@@ -137,7 +137,7 @@ namespace behaviac_autoCodeToGo
                         appendCodeLine("EXPORT void Agent_" + className + "_Set" + memberNode.Attributes["Name"].InnerText + "(int agentid, " + codeType + " value) {");
                         appendCodeLine(className + "* agent = (" + className + "*)allAgentInstances[agentid];");
                         if (kind == TypeKind.Agent)
-                            appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + "*)allAgentInstances[value];");
+                            appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")allAgentInstances[value];");
                         else
                             appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")value;");
                         appendCodeLine("}");
@@ -277,10 +277,11 @@ namespace behaviac_autoCodeToGo
                         if (memberNode.LocalName != "Member") continue;
                         kind = Tool.GetAttributeTypeKind(memberNode, out codeType, out codeTypeIsString, false, false);
                         codeType = codeType == "float" ? "float32" : (codeType == "double" ? "float64" : codeType);
-                        gosb.AppendLine("func (ins *Agent" + className + ") Get" + memberNode.Attributes["Name"].InnerText + "() " + codeType + "{");
+                        string goName = memberNode.Attributes["Name"].InnerText.Substring(0, 1).ToUpper() + memberNode.Attributes["Name"].InnerText.Substring(1);
+                        gosb.AppendLine("func (ins *Agent" + className + ") Get" + goName + "() " + codeType + "{");
                         gosb.AppendLine("return internal.Agent_" + className + "_Get" + memberNode.Attributes["Name"].InnerText + "(ins.m_id)");
                         gosb.AppendLine("}");
-                        gosb.AppendLine("func (ins *Agent" + className + ") Set" + memberNode.Attributes["Name"].InnerText + "(value " + codeType + " ) {");
+                        gosb.AppendLine("func (ins *Agent" + className + ") Set" + goName + "(value " + codeType + " ) {");
                         gosb.AppendLine("internal.Agent_" + className + "_Set" + memberNode.Attributes["Name"].InnerText + "(ins.m_id, value)");
                         gosb.AppendLine("}");
                     }

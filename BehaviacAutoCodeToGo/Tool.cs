@@ -45,7 +45,7 @@ namespace behaviac_autoCodeToGo
             string attName = isRet ? "ReturnType" : "Type";
 
             string rtype = node.Attributes[attName].InnerText;
-            if (rtype.EndsWith("&"))
+            if (rtype.EndsWith("&") || rtype.EndsWith("*"))
                 rtype = rtype.Substring(0, rtype.Length - 1);
             if (rtype == "string")
             {
