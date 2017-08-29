@@ -266,7 +266,10 @@ namespace behaviac_autoCodeToGo
                     gosb.AppendLine("return &Agent" + className + "{NewAgentBaseInherit(id)}");
                     gosb.AppendLine("}");
                     gosb.AppendLine("func NewAgent" + className + "() *Agent" + className + " {");
-                    gosb.AppendLine("id := internal.Agent_" + className + "_Create()");
+                    gosb.AppendLine("var id int");
+                    gosb.AppendLine("exeOnMain(func() {");
+                    gosb.AppendLine("id = internal.Agent_" + className + "_Create()");
+                    gosb.AppendLine("})");
                     gosb.AppendLine("agent := NewAgent" + className + "Inherit(id)");
                     gosb.AppendLine("allGoAgentInstances[id] = agent");
                     gosb.AppendLine("return agent");
