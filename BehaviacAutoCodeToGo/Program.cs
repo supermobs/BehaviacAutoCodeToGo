@@ -271,7 +271,7 @@ namespace behaviac_autoCodeToGo
                     gosb.AppendLine("id = internal.Agent_" + className + "_Create()");
                     gosb.AppendLine("})");
                     gosb.AppendLine("agent := NewAgent" + className + "Inherit(id)");
-                    gosb.AppendLine("allGoAgentInstances[id] = agent");
+                    gosb.AppendLine("allGoAgentInstances.Store(id, agent)");
                     gosb.AppendLine("return agent");
                     gosb.AppendLine("}");
                     // Agent类的属性读写
