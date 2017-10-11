@@ -34,8 +34,18 @@ namespace behaviac_autoCodeToGo
         public static Action<string> CleanOldCpp(List<string> lineCodes, string startFlag)
         {
             int initStartLine = lineCodes.IndexOf(startFlag) + 1;
-            while (lineCodes[initStartLine] != "///<<< END WRITING YOUR CODE")
-                lineCodes.RemoveAt(initStartLine);
+            // 在c++中实现方法
+            if (lineCodes[initStartLine] == "/*")
+            {
+                initStartLine++;
+                while (lineCodes[initStartLine] != "*/")
+                    lineCodes.RemoveAt(initStartLine);
+            }
+            else
+            {
+                while (lineCodes[initStartLine] != "///<<< END WRITING YOUR CODE")
+                    lineCodes.RemoveAt(initStartLine);
+            }
             return code => { lineCodes.Insert(initStartLine++, code); };
         }
 
