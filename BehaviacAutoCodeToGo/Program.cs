@@ -183,7 +183,7 @@ namespace behaviac_autoCodeToGo
                                 paramStr += "," + paramNode.Attributes["Name"].InnerText + (codeTypeIsString ? ".c_str()" : "");
                         }
                         string ReturnType = methodNode.Attributes["ReturnType"].InnerText;
-                        appendCodeLine((ReturnType != "void" ? "return (" + ReturnType + ") " : "") + "Agent_" + className + "_" + methodName + "(this->GetId()" + paramStr + ");");
+                        appendCodeLine((ReturnType != "void" ? "return (" + ReturnType + ") " : "") + "Agent_" + className + "_" + methodName + "(this==NULL?-1:this->GetId()" + paramStr + ");");
                     }
 
                     // 写入CPP
