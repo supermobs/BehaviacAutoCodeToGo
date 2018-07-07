@@ -127,7 +127,7 @@ namespace behaviac_autoCodeToGo
                     // 创建Agent
                     appendCodeLine("EXPORT int Agent_" + className + "_Create() {");
                     appendCodeLine("behaviac::Agent* agent = behaviac::Agent::Create<" + className + ">();");
-                    appendCodeLine("allAgentInstances.insert(std::map<int, void*>::value_type(agent->GetId(), agent));");
+                    appendCodeLine("AddAgentInstance(agent->GetId(), agent);");
                     appendCodeLine("return agent->GetId();");
                     appendCodeLine("}");
                     // 自定义属性访问
@@ -137,7 +137,7 @@ namespace behaviac_autoCodeToGo
                         kind = Tool.GetAttributeTypeKind(memberNode, out codeType, out codeTypeIsString);
                         // get
                         appendCodeLine("EXPORT " + codeType + " Agent_" + className + "_Get" + memberNode.Attributes["Name"].InnerText + "(int agentid) {");
-                        appendCodeLine(className + "* agent = (" + className + "*)allAgentInstances[agentid];");
+                        appendCodeLine(className + "* agent = (" + className + "*)GetAgentInstance(agentid);");
                         appendCodeLine("if (agent == NULL){");
                         appendCodeLine("LogManager::GetInstance()->Log(\"agent has been destroyed, id = %i\", agentid);");
                         appendCodeLine("return " + (kind == TypeKind.Agent ? "-1" : typeErrorValue[codeType]) + ";");
@@ -149,13 +149,13 @@ namespace behaviac_autoCodeToGo
                         appendCodeLine("}");
                         // set
                         appendCodeLine("EXPORT void Agent_" + className + "_Set" + memberNode.Attributes["Name"].InnerText + "(int agentid, " + codeType + " value) {");
-                        appendCodeLine(className + "* agent = (" + className + "*)allAgentInstances[agentid];");
+                        appendCodeLine(className + "* agent = (" + className + "*)GetAgentInstance(agentid);");
                         appendCodeLine("if (agent == NULL){");
                         appendCodeLine("LogManager::GetInstance()->Log(\"agent has been destroyed, id = %i\", agentid);");
                         appendCodeLine("return;");
                         appendCodeLine("}");
                         if (kind == TypeKind.Agent)
-                            appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")allAgentInstances[value];");
+                            appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")GetAgentInstance(agentid);");
                         else
                             appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")value;");
                         appendCodeLine("}");
