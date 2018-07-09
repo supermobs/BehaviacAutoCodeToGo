@@ -155,7 +155,7 @@ namespace behaviac_autoCodeToGo
                         appendCodeLine("return;");
                         appendCodeLine("}");
                         if (kind == TypeKind.Agent)
-                            appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")GetAgentInstance(agentid);");
+                            appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")GetAgentInstance(value);");
                         else
                             appendCodeLine("agent->" + memberNode.Attributes["Name"].InnerText + " = (" + memberNode.Attributes["Type"].InnerText + ")value;");
                         appendCodeLine("}");
